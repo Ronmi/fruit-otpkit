@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 .PHONY: force-update clean prepare lint \
-	phploc pdepend phpmd phpcs phpcpd test docs
+	phploc pdepend phpmd phpcs phpcpd docs
 
 lint:
 	find src -name '*.php' -exec php -l {} \;
@@ -27,9 +27,6 @@ update: composer.phar
 force-update: composer.phar
 	./composer.phar selfupdate
 	./composer.phar update
-
-test: vendor/autoload.php
-	vendor/bin/phpunit -c phpunit.xml
 
 clean:
 	rm -fr build/coverage
@@ -61,4 +58,4 @@ phpcs: prepare
 phpcpd: prepare
 	vendor/bin/phpcpd --log-pmd build/logs/pmd-cpd.xml src
 
-all: clean prepare lint phploc pdepend phpmd phpcs phpcpd test docs
+all: clean prepare lint phploc pdepend phpmd phpcs phpcpd docs
